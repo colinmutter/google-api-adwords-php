@@ -1,0 +1,26 @@
+{
+    "name": "cmutter/google-adwords-api",
+    "type": "library",
+    "description": "AdWords PHP API Client",
+    "keywords": ["adwords", "google"],
+    "homepage": "https://github.com/colinmutter/google-api-adwords-php",
+    "license": "Apache License 2.0",
+    "authors": [
+        {
+            "name": "Adam Rogal",
+            "email": "api.arogal@gmail.com",
+            "homepage": "http://code.google.com/p/google-api-adwords-php/"
+        },
+        {
+            "name": "Eric Koleda",
+            "email": "eric.koleda.devrel@gmail.com",
+            "homepage": "https://profiles.google.com/u/0/eric.koleda.devrel"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["src/Google/Api/Ads/AdWords/Lib"]
+    }
+}
