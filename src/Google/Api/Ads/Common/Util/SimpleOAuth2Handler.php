@@ -20,8 +20,8 @@
  * @copyright  2012, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Eric Koleda <api.ekoleda@gmail.com>
- * @author     Vincent Tsao <api.vtsao@gmail.com>
+ * @author     Eric Koleda
+ * @author     Vincent Tsao
  */
 require_once 'Google/Api/Ads/Common/Util/OAuth2Handler.php';
 require_once 'Google/Api/Ads/Common/Util/CurlUtils.php';
@@ -38,8 +38,9 @@ class SimpleOAuth2Handler extends OAuth2Handler {
    * @param string $server the auth server to make OAuth2 request against
    * @param CurlUtils $curlUtils an instance of CurlUtils
    */
-  public function __construct($server = NULL, $curlUtils = NULL) {
-    parent::__construct($server);
+  public function __construct($server = NULL, $scope = NULL,
+      $curlUtils = NULL) {
+    parent::__construct($server, $scope);
     $this->curlUtils = is_null($curlUtils) ? new CurlUtils() : $curlUtils;
   }
 
@@ -54,9 +55,8 @@ class SimpleOAuth2Handler extends OAuth2Handler {
     if (empty($credentials['client_secret'])) {
       throw new OAuth2Exception('client_secret required.');
     }
-    if (empty($redirectUri)) {
-      $redirectUri = self::$DEFAULT_REDIRECT_URI;
-    }
+    $redirectUri = !empty($redirectUri) ?
+        $redirectUri : self::DEFAULT_REDIRECT_URI;
     $params = array(
         'code' => $code,
         'client_id' => $credentials['client_id'],
@@ -117,4 +117,3 @@ class SimpleOAuth2Handler extends OAuth2Handler {
     return json_decode($response, TRUE);
   }
 }
-

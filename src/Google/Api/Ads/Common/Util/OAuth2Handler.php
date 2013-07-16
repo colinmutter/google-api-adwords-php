@@ -24,8 +24,8 @@
  * @copyright  2012, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Eric Koleda <api.ekoleda@gmail.com>
- * @author     Vincent Tsao <api.vtsao@gmail.com>
+ * @author     Eric Koleda
+ * @author     Vincent Tsao
  */
 require_once 'Google/Api/Ads/Common/Util/UrlUtils.php';
 
@@ -35,27 +35,30 @@ require_once 'Google/Api/Ads/Common/Util/UrlUtils.php';
  * @subpackage Util
  */
 abstract class OAuth2Handler {
-  public static $DEFAULT_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob';
-
-  private static $AUTHORIZE_ENDPOINT =
-      'https://accounts.google.com/o/oauth2/auth';
-  private static $ACCESS_ENDPOINT =
-      'https://accounts.google.com/o/oauth2/token';
+  /**
+   * The refresh buffer of 60 seconds.
+   */
+  const REFRESH_BUFFER = 60;
+  const DEFAULT_REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob';
+  const AUTHORIZE_ENDPOINT = 'https://accounts.google.com/o/oauth2/auth';
+  const ACCESS_ENDPOINT = 'https://accounts.google.com/o/oauth2/token';
 
   private $server;
+  protected $scope;
 
   /**
    * Constructor.
+   *
    * @param string $server the auth server to make OAuth2 request against
    */
-  public function __construct($server = NULL) {
+  public function __construct($server = NULL, $scope = NULL) {
     $this->server = $server;
+    $this->scope = $scope;
   }
 
   /**
    * Gets the authorization URL to redirect to.
    * @param array $credentials the credentials, including client_id
-   * @param string $scope the scope of the application to authorize
    * @param string $redirectUri optional callback URL
    * @param boolean $offline whether or not to request offline access (aka a
    *     refresh token), false by default
@@ -64,25 +67,20 @@ abstract class OAuth2Handler {
    * @return string an authorization URL to redirect the user to
    * @see https://developers.google.com/accounts/docs/OAuth2WebServer#formingtheurl
    */
-  public function GetAuthorizationUrl(array $credentials, $scope,
+  public function GetAuthorizationUrl(array $credentials,
       $redirectUri = NULL, $offline = NULL, array $params = NULL) {
     if (empty($credentials['client_id'])) {
       throw new OAuth2Exception('client_id required.');
     }
-    if (!isset($offline)) {
-      $offline = FALSE;
-    }
-    if (!isset($params)) {
-      $params = array();
-    }
-    if (empty($redirectUri)) {
-      $redirectUri = self::$DEFAULT_REDIRECT_URI;
-    }
+    $params = is_null($params) ? array() : $params;
+    $redirectUri = is_null($redirectUri) ?
+        self::DEFAULT_REDIRECT_URI : $redirectUri;
+
     $params = array_merge($params, array(
         'response_type' => 'code',
         'client_id' => $credentials['client_id'],
         'redirect_uri' => $redirectUri,
-        'scope' => $scope,
+        'scope' => $this->scope,
         'access_type' => $offline ? 'offline' : 'online'
     ));
     return $this->GetAuthorizeEndpoint($params);
@@ -102,30 +100,97 @@ abstract class OAuth2Handler {
       $redirectUri = NULL);
 
   /**
+   * Get the valid access token or the token if needed and possible.
+   * @param array $credentials the credentials, including client_id and
+   *     client_secret
+   * @return array the credentials passed in plus any refreshed credentials
+   *     if they were refreshed
+   */
+  public function GetOrRefreshAccessToken(array $credentials) {
+      if ($this->ShouldRefreshAccessToken($credentials) &&
+          $this->CanRefreshAccessToken($credentials)) {
+        $credentials = $this->RefreshAccessToken($credentials);
+      }
+      return $credentials;
+  }
+
+  /**
+   * Determines if the access token should be refreshed.
+   * @param array $credentials the credentials, including client_id and
+   *     client_secret
+   * @return boolean TRUE if the Access Token should be refreshed
+   */
+  public function ShouldRefreshAccessToken(array $credentials) {
+    return (!$this->IsAccessTokenValid($credentials) ||
+      $this->IsAccessTokenExpiring($credentials));
+  }
+
+  /**
    * Determines if the access token is still valid. If expiry information isn't
    * available then this function will assume it is.
    * @param array $credentials the credentials, including access_token,
    *     timestamp and expires_in
-   * @return boolean true if the access token is valid or if expiring
+   * @return boolean TRUE if the access token is valid or if expiring
    *     information isn't available
    */
   public function IsAccessTokenValid(array $credentials) {
     if (empty($credentials['access_token'])) {
       return FALSE;
     }
-    if (empty($credentials['timestamp']) ||
-        empty($credentials['expires_in'])) {
-      return TRUE;
+    $expiry = $this->GetExpiryTimestamp($credentials);
+    if ($expiry) {
+      // Test if expiry hasn't passed.
+      return $expiry > time();
     }
-    $expires = intval($credentials['timestamp']) +
-        intval($credentials['expires_in']);
-    return $expires > time();
+
+    // No expiry information, assume valid.
+    return TRUE;
+  }
+
+  /**
+   * Tests if the access token is about to expire or has expired.
+   * @param array $credentials the credentials, including access_token,
+   *     timestamp and expires_in
+   * @return boolean TRUE if the token has expired
+   **/
+  public function IsAccessTokenExpiring(array $credentials) {
+    $expiry = $this->GetExpiryTimestamp($credentials);
+    if ($expiry) {
+      // Subtract the refresh buffer.
+      $expiry -= self::REFRESH_BUFFER;
+
+      // Test if expiry has passed.
+      return $expiry < time();
+    }
+
+    return FALSE;
+  }
+
+  /**
+   * Get the expiry of a given credential, or false if none is found.
+   * @param array $credentials the credentials, including access_token,
+   *     timestamp and expires_in
+   * @return int|boolean utc timestamp if exists or FALSE if none found
+   */
+  private function GetExpiryTimestamp(array $credentials) {
+    if (empty($credentials['timestamp'])
+        || empty($credentials['expires_in'])) {
+      return FALSE;
+    }
+
+    // Set to refreshed time.
+    $expires = intval($credentials['timestamp']);
+
+    // Add the expiry value.
+    $expires += intval($credentials['expires_in']);
+
+    return $expires;
   }
 
   /**
    * Determines if the access token can be refreshed.
    * @param array $credentials the credentials
-   * @return boolean true if the credentials can be refreshed
+   * @return boolean TRUE if the credentials can be refreshed
    */
   public function CanRefreshAccessToken(array $credentials) {
     return !empty($credentials['refresh_token']);
@@ -176,7 +241,7 @@ abstract class OAuth2Handler {
    * @return string the authorization endpoint
    */
   protected function GetAuthorizeEndpoint($params = NULL) {
-    return $this->GetEndpoint(self::$AUTHORIZE_ENDPOINT, $params);
+    return $this->GetEndpoint(self::AUTHORIZE_ENDPOINT, $params);
   }
 
   /**
@@ -185,7 +250,7 @@ abstract class OAuth2Handler {
    * @return string the access endpoint
    */
   protected function GetAccessEndpoint($params = NULL) {
-    return $this->GetEndpoint(self::$ACCESS_ENDPOINT, $params);
+    return $this->GetEndpoint(self::ACCESS_ENDPOINT, $params);
   }
 
   /**
@@ -211,4 +276,3 @@ class OAuth2Exception extends Exception {
     parent::__construct($message, $code);
   }
 }
-

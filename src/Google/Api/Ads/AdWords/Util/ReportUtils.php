@@ -33,6 +33,8 @@ require_once dirname(__FILE__) . '/../../Common/Util/XmlUtils.php';
  */
 class ReportUtils {
 
+  const CLIENT_LOGIN_FORMAT = 'GoogleLogin auth=%s';
+
   /**
    * The log name to use when logging requests.
    */
@@ -296,38 +298,25 @@ class ReportUtils {
     $version = !empty($options['version']) ? $options['version'] :
         $user->GetDefaultVersion();
     // Authorization.
-    if ($user->GetOAuthInfo()) {
-      $oauthParams = $user->GetOAuthHandler()->GetSignedRequestParameters(
-          $user->GetOAuthInfo(), $url, 'POST');
-      $headers['Authorization'] = 'OAuth '
-          . $user->GetOAuthHandler()->FormatParametersForHeader($oauthParams);
-    } elseif ($user->GetOAuth2Info()) {
-      if (!$user->IsOAuth2AccessTokenValid() &&
-          $user->CanRefreshOAuth2AccessToken()) {
-        $user->RefreshOAuth2AccessToken();
-      }
-      $oauth2Header = $user->GetOAuth2Handler()->FormatCredentialsForHeader(
-          $user->GetOAuth2Info());
-      $headers['Authorization'] = $oauth2Header;
+    $authHeader = NULL;
+    $oAuth2Info = $user->GetOAuth2Info();
+    $oAuth2Handler = $user->GetOAuth2Handler();
+    if (!empty($oAuth2Info)) {
+      $oAuth2Info = $oAuth2Handler->GetOrRefreshAccessToken($oAuth2Info);
+      $user->SetOAuth2Info($oAuth2Info);
+      $authHeader = $oAuth2Handler->FormatCredentialsForHeader($oAuth2Info);
     } else {
-      $headers['Authorization']= 'GoogleLogin auth=' . $user->GetAuthToken();
+      $authHeader = sprintf(self::CLIENT_LOGIN_FORMAT, $user->GetAuthToken());
     }
+    $headers['Authorization'] = $authHeader;
+
     // Developer token.
     $headers['developerToken'] = $user->GetDeveloperToken();
     // Target client.
     $email = $user->GetEmail();
-    $clientId = $user->GetClientId();
-    if (isset($clientId)) {
-      if (strpos($clientId, '@') !== FALSE) {
-        if ($version < 'v201109') {
-          $headers['clientEmail'] = $clientId;
-        } else {
-          throw new ReportDownloadException('Client emails are not supported '
-              . 'in versions v201109 and later.');
-        }
-      } else {
-        $headers['clientCustomerId'] = $clientId;
-      }
+    $clientCustomerId = $user->GetClientCustomerId();
+    if (isset($clientCustomerId)) {
+      $headers['clientCustomerId'] = $clientCustomerId;
     } else {
       if ($version < 'v201109' && isset($email)) {
         $headers['clientEmail'] = $email;

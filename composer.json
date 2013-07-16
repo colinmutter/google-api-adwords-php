@@ -22,5 +22,6 @@
     },
     "autoload": {
         "classmap": ["src/Google/Api/Ads/AdWords/Lib"]
-    }
+    },
+    "include-path": ["src/"]
 }

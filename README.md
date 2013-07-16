@@ -4,6 +4,7 @@ AdWords API PHP Client
 Current versions supported: 
 
  - 4.2.1 (v201209, v201302)
+ - 4.4.0 (v201209, v201302, v201306)
 
 Added composer.json, and registered with packagist so that you can have convenient versions of the adwords api client added to your projects.
 
@@ -17,21 +18,16 @@ or add this to your composer.json, and ```composer update```
 ```  
 {
     "require": {
-        "cmutter/google-adwords-api"": "4.2.1"
+        "cmutter/google-adwords-api"": "4.4.0"
     }
 }
 ```
 
-Symfony 2.x Notice
+
+Symfony 2.x Autoloader Notice
 ============================
-The AdWords client library in the 4.x series started requiring users to add the path of their libraries to the PHP include_path.  Even with the autoloader in symfony, the fact that the library uses require_once(path) means that you will need to add this to your **app/autoload.php** :
+The AdWords client library in the 4.x series started requiring users to add the path of their libraries to the PHP include_path.  This PSR-0 non-compliance necessitates the use of the deprecated "include-path" option in Composer.  Don't worry, it's taken care of, and Composer says they're not getting rid of the option anytime soon.
 
-```
-$path = dirname(__FILE__) . '/../vendor/cmutter/google-adwords-api/src';
-set_include_path(get_include_path() . PATH_SEPARATOR . $path);
-```
-
-It seems suboptimal, but if anyone has a better idea, please submit an issue or PR.
 
 Credits
 ============================

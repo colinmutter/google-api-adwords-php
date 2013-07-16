@@ -24,9 +24,9 @@
  * @copyright  2011, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Adam Rogal <api.arogal@gmail.com>
- * @author     Eric Koleda <api.ekoleda@gmail.com>
- * @author     Vincent Tsao <api.vtsao@gmail.com>
+ * @author     Adam Rogal
+ * @author     Eric Koleda
+ * @author     Vincent Tsao
  */
 
 /**
@@ -35,6 +35,15 @@
  * @subpackage Lib
  */
 class ValidationException extends Exception {
+
+    const EXCEPTION_FORMAT = 'Validation failed for [%s] with value [%s]: %s';
+
+    /**
+     * The trigger for the validation exception.
+     * @var $trigger
+     */
+    protected $trigger;
+
     /**
      * Constructor for ValidationException where the exception will appear
      * as "Validation failed for [$trigger] with value [$value]: $message".
@@ -43,9 +52,17 @@ class ValidationException extends Exception {
      * @param string $message the message representing the error in validation
      */
     public function __construct($trigger, $value, $message) {
-      $exceptionMessage = "Validation failed for [" . $trigger . "] with value"
-          . " [" . $value . "]: " . $message;
-      parent::__construct($exceptionMessage);
+      $this->trigger = $trigger;
+      parent::__construct(sprintf(self::EXCEPTION_FORMAT, $trigger, $value,
+          $message));
+    }
+
+    /**
+     * Get the trigger for the validation error.
+     * @return string the trigger for the validation error.
+     */
+    public function GetTrigger() {
+      return $this->trigger;
     }
 }
 
