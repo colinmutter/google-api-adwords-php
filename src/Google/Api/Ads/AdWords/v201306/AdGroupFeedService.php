@@ -681,7 +681,7 @@ class EntityNotFound extends ApiError {
   }
 }}
 
-if (!class_exists("Function", FALSE)) {
+if (!class_exists("FeedFunction", FALSE)) {
 /**
  * Represents a function where its operator is applied to its argument operands
  * resulting in a return value. It has the form
@@ -717,7 +717,7 @@ if (!class_exists("Function", FALSE)) {
  * @package GoogleApiAdsAdWords
  * @subpackage v201306
  */
-class Function {
+class FeedFunction {
   /**
    * @access public
    * @var tnsFunctionOperator
