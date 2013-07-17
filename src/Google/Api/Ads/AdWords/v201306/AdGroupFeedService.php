@@ -3503,7 +3503,7 @@ class AdGroupFeedService extends AdWordsSoapClient {
     "EntityCountLimitExceeded" => "EntityCountLimitExceeded",
     "EntityNotFound" => "EntityNotFound",
     "FeedAttributeOperand" => "FeedAttributeOperand",
-    "Function" => "Function",
+    "Function" => "FeedFunction",
     "FunctionError" => "FunctionError",
     "FunctionOperand" => "FunctionOperand",
     "IdError" => "IdError",
