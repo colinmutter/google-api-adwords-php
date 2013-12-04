@@ -24,11 +24,9 @@
  * @copyright  2011, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Adam Rogal <api.arogal@gmail.com>
+ * @author     Adam Rogal
  * @see        AdsSoapClient
  */
-
-/** Required classes. **/
 require_once dirname(__FILE__) . '/../../Common/Lib/AdsSoapClient.php';
 
 /**
@@ -37,6 +35,7 @@ require_once dirname(__FILE__) . '/../../Common/Lib/AdsSoapClient.php';
  * @subpackage Lib
  */
 class AdWordsSoapClient extends AdsSoapClient {
+
   /**
    * Constructor for the AdWords API SOAP client.
    * @param string $wsdl URI of the WSDL file or <var>NULL</var> if working in
@@ -211,3 +210,4 @@ class AdWordsSoapClient extends AdsSoapClient {
         . ' faultMessage=' . $this->GetLastFaultMessage();
   }
 }
+

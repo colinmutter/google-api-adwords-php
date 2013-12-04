@@ -1,5 +1,9 @@
 <?php
 /**
+ * A collection of utility methods for working with reports.
+ *
+ * PHP version 5
+ *
  * Copyright 2011, Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +24,8 @@
  * @copyright  2011, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Eric Koleda <api.ekoleda@gmail.com>
- * @author     Vincent Tsao <api.vtsao@gmail.com>
+ * @author     Eric Koleda
+ * @author     Vincent Tsao
  */
 require_once dirname(__FILE__) . '/../Lib/AdWordsUser.php';
 require_once dirname(__FILE__) . '/../../Common/Util/CurlUtils.php';
@@ -30,6 +34,8 @@ require_once dirname(__FILE__) . '/../../Common/Util/XmlUtils.php';
 
 /**
  * A collection of utility methods for working with reports.
+ * @package GoogleApiAdsAdWords
+ * @subpackage Util
  */
 class ReportUtils {
 
@@ -843,3 +849,4 @@ class DownloadFormat {
     if(get_parent_class('DownloadFormat')) parent::__construct();
   }
 }}
+

@@ -24,11 +24,9 @@
  * @copyright  2011, Google Inc. All Rights Reserved.
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
- * @author     Adam Rogal <api.arogal@gmail.com>
+ * @author     Adam Rogal
  * @see        SoapClientFactory
  */
-
-/** Required classes. **/
 require_once dirname(__FILE__) . '/../../Common/Lib/AdsUser.php';
 require_once dirname(__FILE__) . '/../../Common/Lib/SoapClientFactory.php';
 
@@ -38,6 +36,7 @@ require_once dirname(__FILE__) . '/../../Common/Lib/SoapClientFactory.php';
  * @subpackage Lib
  */
 class AdWordsSoapClientFactory extends SoapClientFactory {
+
   /**
    * The constructor for the AdWords API SOAP client factory.
    * @param AdsUser $user the user which the client will use for credentials
@@ -71,3 +70,4 @@ class AdWordsSoapClientFactory extends SoapClientFactory {
         $this->GetVersion(), $serviceName . '.php'));
   }
 }
+

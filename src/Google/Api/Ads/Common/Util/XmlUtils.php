@@ -36,6 +36,7 @@ require_once 'Google/Api/Ads/Common/Util/MapUtils.php';
  * @subpackage Util
  */
 class XmlUtils {
+
   /**
    * Gets the DOMDocument of the <var>$xml</var>.
    * @param string $xml the XML to create a DOMDocument from

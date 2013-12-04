@@ -38,6 +38,7 @@ require_once 'Google/Api/Ads/Common/Util/XmlUtils.php';
  * @subpackage Util
  */
 class SoapRequestXmlFixer {
+
   private static $XSI_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance';
 
   private $addXsiTypes;

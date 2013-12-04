@@ -32,11 +32,11 @@ require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
 
 /**
  * Base class for all SOAP client factories of Ads client libraries.
- * @abstract
  * @package GoogleApiAdsCommon
  * @subpackage Lib
  */
 abstract class SoapClientFactory {
+
   private $user;
   private $version;
   private $server;

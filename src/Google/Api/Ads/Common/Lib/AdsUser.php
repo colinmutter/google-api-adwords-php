@@ -1,5 +1,9 @@
 <?php
 /**
+ * User class for all API modules using the Ads API.
+ *
+ * PHP version 5
+ *
  * Copyright 2011, Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,6 +35,8 @@ require_once 'Google/Api/Ads/Common/Lib/ValidationException.php';
 
 /**
  * User class for all API modules using the Ads API.
+ * @package GoogleApiAdsCommon
+ * @subpackage Lib
  */
 abstract class AdsUser {
 

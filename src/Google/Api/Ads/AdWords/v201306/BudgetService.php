@@ -30,61 +30,6 @@
 /** Required classes. **/
 require_once "Google/Api/Ads/AdWords/Lib/AdWordsSoapClient.php";
 
-if (!class_exists("AssociatedCampaign", FALSE)) {
-/**
- * This class represents a campaign which is or was linked to the parent budget object.
- * @package GoogleApiAdsAdWords
- * @subpackage v201306
- */
-class AssociatedCampaign {
-  /**
-   * @access public
-   * @var string
-   */
-  public $associatedCampaignName;
-
-  /**
-   * @access public
-   * @var integer
-   */
-  public $associatedCampaignId;
-
-  /**
-   * @access public
-   * @var tnsAssociatedCampaignCampaignStatus
-   */
-  public $associatedCampaignStatus;
-
-  /**
-   * @access public
-   * @var tnsAssociatedCampaignBudgetCampaignAssociationStatus
-   */
-  public $budgetCampaignAssociationStatus;
-
-  /**
-   * Gets the namesapce of this class
-   * @return the namespace of this class
-   */
-  public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
-  }
-
-  /**
-   * Gets the xsi:type name of this class
-   * @return the xsi:type name of this class
-   */
-  public function getXsiTypeName() {
-    return "AssociatedCampaign";
-  }
-
-  public function __construct($associatedCampaignName = NULL, $associatedCampaignId = NULL, $associatedCampaignStatus = NULL, $budgetCampaignAssociationStatus = NULL) {
-    $this->associatedCampaignName = $associatedCampaignName;
-    $this->associatedCampaignId = $associatedCampaignId;
-    $this->associatedCampaignStatus = $associatedCampaignStatus;
-    $this->budgetCampaignAssociationStatus = $budgetCampaignAssociationStatus;
-  }
-}}
-
 if (!class_exists("DateRange", FALSE)) {
 /**
  * Represents a range of dates that has either an upper or a lower bound.
@@ -110,7 +55,7 @@ class DateRange {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -151,7 +96,7 @@ class OrderBy {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -194,7 +139,7 @@ class Paging {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -241,7 +186,7 @@ class Predicate {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -307,7 +252,7 @@ class SoapRequestHeader {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -366,17 +311,11 @@ class SoapResponseHeader {
   public $responseTime;
 
   /**
-   * @access public
-   * @var integer
-   */
-  public $units;
-
-  /**
    * Gets the namesapce of this class
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -387,13 +326,12 @@ class SoapResponseHeader {
     return "SoapResponseHeader";
   }
 
-  public function __construct($requestId = NULL, $serviceName = NULL, $methodName = NULL, $operations = NULL, $responseTime = NULL, $units = NULL) {
+  public function __construct($requestId = NULL, $serviceName = NULL, $methodName = NULL, $operations = NULL, $responseTime = NULL) {
     $this->requestId = $requestId;
     $this->serviceName = $serviceName;
     $this->methodName = $methodName;
     $this->operations = $operations;
     $this->responseTime = $responseTime;
-    $this->units = $units;
   }
 }}
 
@@ -447,7 +385,7 @@ class ComparableValue {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -535,7 +473,7 @@ class ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -610,7 +548,7 @@ class ApplicationException {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -624,6 +562,68 @@ class ApplicationException {
   public function __construct($message = NULL, $ApplicationExceptionType = NULL) {
     $this->message = $message;
     $this->ApplicationExceptionType = $ApplicationExceptionType;
+  }
+}}
+
+if (!class_exists("Selector", FALSE)) {
+/**
+ * A generic selector to specify the type of information to return.
+ * @package GoogleApiAdsAdWords
+ * @subpackage v201306
+ */
+class Selector {
+  /**
+   * @access public
+   * @var string[]
+   */
+  public $fields;
+
+  /**
+   * @access public
+   * @var Predicate[]
+   */
+  public $predicates;
+
+  /**
+   * @access public
+   * @var DateRange
+   */
+  public $dateRange;
+
+  /**
+   * @access public
+   * @var OrderBy[]
+   */
+  public $ordering;
+
+  /**
+   * @access public
+   * @var Paging
+   */
+  public $paging;
+
+  /**
+   * Gets the namesapce of this class
+   * @return the namespace of this class
+   */
+  public function getNamespace() {
+    return "https://adwords.google.com/api/adwords/cm/v201306";
+  }
+
+  /**
+   * Gets the xsi:type name of this class
+   * @return the xsi:type name of this class
+   */
+  public function getXsiTypeName() {
+    return "Selector";
+  }
+
+  public function __construct($fields = NULL, $predicates = NULL, $dateRange = NULL, $ordering = NULL, $paging = NULL) {
+    $this->fields = $fields;
+    $this->predicates = $predicates;
+    $this->dateRange = $dateRange;
+    $this->ordering = $ordering;
+    $this->paging = $paging;
   }
 }}
 
@@ -683,17 +683,11 @@ class Budget {
   public $status;
 
   /**
-   * @access public
-   * @var AssociatedCampaign[]
-   */
-  public $associatedCampaigns;
-
-  /**
    * Gets the namesapce of this class
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -704,7 +698,7 @@ class Budget {
     return "Budget";
   }
 
-  public function __construct($budgetId = NULL, $name = NULL, $period = NULL, $amount = NULL, $deliveryMethod = NULL, $referenceCount = NULL, $isExplicitlyShared = NULL, $status = NULL, $associatedCampaigns = NULL) {
+  public function __construct($budgetId = NULL, $name = NULL, $period = NULL, $amount = NULL, $deliveryMethod = NULL, $referenceCount = NULL, $isExplicitlyShared = NULL, $status = NULL) {
     $this->budgetId = $budgetId;
     $this->name = $name;
     $this->period = $period;
@@ -713,7 +707,6 @@ class Budget {
     $this->referenceCount = $referenceCount;
     $this->isExplicitlyShared = $isExplicitlyShared;
     $this->status = $status;
-    $this->associatedCampaigns = $associatedCampaigns;
   }
 }}
 
@@ -767,7 +760,7 @@ class ListReturnValue {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -840,7 +833,7 @@ class Operation {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -913,7 +906,7 @@ class Page {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -930,122 +923,6 @@ class Page {
   }
 }}
 
-if (!class_exists("Selector", FALSE)) {
-/**
- * A generic selector to specify the type of information to return.
- * @package GoogleApiAdsAdWords
- * @subpackage v201306
- */
-class Selector {
-  /**
-   * @access public
-   * @var string[]
-   */
-  public $fields;
-
-  /**
-   * @access public
-   * @var Predicate[]
-   */
-  public $predicates;
-
-  /**
-   * @access public
-   * @var DateRange
-   */
-  public $dateRange;
-
-  /**
-   * @access public
-   * @var OrderBy[]
-   */
-  public $ordering;
-
-  /**
-   * @access public
-   * @var Paging
-   */
-  public $paging;
-
-  /**
-   * Gets the namesapce of this class
-   * @return the namespace of this class
-   */
-  public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
-  }
-
-  /**
-   * Gets the xsi:type name of this class
-   * @return the xsi:type name of this class
-   */
-  public function getXsiTypeName() {
-    return "Selector";
-  }
-
-  public function __construct($fields = NULL, $predicates = NULL, $dateRange = NULL, $ordering = NULL, $paging = NULL) {
-    $this->fields = $fields;
-    $this->predicates = $predicates;
-    $this->dateRange = $dateRange;
-    $this->ordering = $ordering;
-    $this->paging = $paging;
-  }
-}}
-
-if (!class_exists("AssociatedCampaignBudgetCampaignAssociationStatus", FALSE)) {
-/**
- * 
- * @package GoogleApiAdsAdWords
- * @subpackage v201306
- */
-class AssociatedCampaignBudgetCampaignAssociationStatus {
-  /**
-   * Gets the namesapce of this class
-   * @return the namespace of this class
-   */
-  public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
-  }
-
-  /**
-   * Gets the xsi:type name of this class
-   * @return the xsi:type name of this class
-   */
-  public function getXsiTypeName() {
-    return "AssociatedCampaign.BudgetCampaignAssociationStatus";
-  }
-
-  public function __construct() {
-  }
-}}
-
-if (!class_exists("AssociatedCampaignCampaignStatus", FALSE)) {
-/**
- * 
- * @package GoogleApiAdsAdWords
- * @subpackage v201306
- */
-class AssociatedCampaignCampaignStatus {
-  /**
-   * Gets the namesapce of this class
-   * @return the namespace of this class
-   */
-  public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
-  }
-
-  /**
-   * Gets the xsi:type name of this class
-   * @return the xsi:type name of this class
-   */
-  public function getXsiTypeName() {
-    return "AssociatedCampaign.CampaignStatus";
-  }
-
-  public function __construct() {
-  }
-}}
-
 if (!class_exists("AuthenticationErrorReason", FALSE)) {
 /**
  * The single reason for the authentication failure.
@@ -1058,7 +935,7 @@ class AuthenticationErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1085,7 +962,7 @@ class AuthorizationErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1112,7 +989,7 @@ class BudgetBudgetDeliveryMethod {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1139,7 +1016,7 @@ class BudgetBudgetPeriod {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1166,7 +1043,7 @@ class BudgetBudgetStatus {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1193,7 +1070,7 @@ class BudgetErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1221,7 +1098,7 @@ class ClientTermsErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1248,7 +1125,7 @@ class DatabaseErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1275,7 +1152,7 @@ class DateErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1302,7 +1179,7 @@ class DistinctErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1329,7 +1206,7 @@ class EntityCountLimitExceededReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1357,7 +1234,7 @@ class EntityNotFoundReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1384,7 +1261,7 @@ class IdErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1411,7 +1288,7 @@ class InternalApiErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1438,7 +1315,7 @@ class NewEntityCreationErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1465,7 +1342,7 @@ class NotEmptyErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1492,7 +1369,7 @@ class NotWhitelistedErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1519,7 +1396,7 @@ class NullErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1546,7 +1423,7 @@ class OperationAccessDeniedReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1573,7 +1450,7 @@ class Operator {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1600,7 +1477,7 @@ class PredicateOperator {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1628,7 +1505,7 @@ class QuotaCheckErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1655,7 +1532,7 @@ class RangeErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1682,7 +1559,7 @@ class RateExceededErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1709,7 +1586,7 @@ class ReadOnlyErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1736,7 +1613,7 @@ class RejectedErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1763,7 +1640,7 @@ class RequestErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1790,7 +1667,7 @@ class RequiredErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1817,7 +1694,7 @@ class SelectorErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1844,7 +1721,7 @@ class SizeLimitErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1871,7 +1748,7 @@ class SortOrder {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1898,7 +1775,7 @@ class StringLengthErrorReason {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1939,7 +1816,7 @@ class BudgetServiceGet {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -1973,7 +1850,7 @@ class BudgetServiceGetResponse {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2018,7 +1895,7 @@ class BudgetServiceMutate {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2052,7 +1929,7 @@ class BudgetServiceMutateResponse {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2086,7 +1963,7 @@ class AuthenticationError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2125,7 +2002,7 @@ class AuthorizationError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2164,7 +2041,7 @@ class BudgetError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2203,7 +2080,7 @@ class ClientTermsError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2242,7 +2119,7 @@ class DateError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2281,7 +2158,7 @@ class DistinctError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2345,7 +2222,7 @@ class EntityCountLimitExceeded extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2389,7 +2266,7 @@ class EntityNotFound extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2428,7 +2305,7 @@ class IdError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2469,7 +2346,7 @@ class InternalApiError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2508,7 +2385,7 @@ class Money extends ComparableValue {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2528,8 +2405,7 @@ class Money extends ComparableValue {
 
 if (!class_exists("NewEntityCreationError", FALSE)) {
 /**
- * Error associated with creation of new entities using
- * {@link com.google.ads.api.services.common.id.TempId}s.
+ * Error associated with creation of new entities.
  * @package GoogleApiAdsAdWords
  * @subpackage v201306
  */
@@ -2545,7 +2421,7 @@ class NewEntityCreationError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2584,7 +2460,7 @@ class NotEmptyError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2623,7 +2499,7 @@ class NotWhitelistedError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2662,7 +2538,7 @@ class NullError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2695,7 +2571,7 @@ class NumberValue extends ComparableValue {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2730,7 +2606,7 @@ class OperationAccessDenied extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2769,7 +2645,7 @@ class QuotaCheckError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2808,7 +2684,7 @@ class RangeError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2865,7 +2741,7 @@ class RateExceededError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2907,7 +2783,7 @@ class ReadOnlyError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2946,7 +2822,7 @@ class RejectedError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -2986,7 +2862,7 @@ class RequestError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3025,7 +2901,7 @@ class RequiredError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3064,7 +2940,7 @@ class SelectorError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3103,7 +2979,7 @@ class SizeLimitError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3143,7 +3019,7 @@ class StringLengthError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3182,7 +3058,7 @@ class DatabaseError extends ApiError {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3221,7 +3097,7 @@ class ApiException extends ApplicationException {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3258,7 +3134,7 @@ class BudgetOperation extends Operation {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3296,7 +3172,7 @@ class BudgetPage extends Page {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3339,7 +3215,7 @@ class BudgetReturnValue extends ListReturnValue {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3376,7 +3252,7 @@ class DoubleValue extends NumberValue {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3412,7 +3288,7 @@ class LongValue extends NumberValue {
    * @return the namespace of this class
    */
   public function getNamespace() {
-    return "https://adwords.google.com/api/adwords/cm/v201302";
+    return "https://adwords.google.com/api/adwords/cm/v201306";
   }
 
   /**
@@ -3448,9 +3324,11 @@ class BudgetService extends AdWordsSoapClient {
     "get" => "BudgetServiceGet",
     "mutate" => "BudgetServiceMutate",
     "mutateResponse" => "BudgetServiceMutateResponse",
+    "mutateCallToAction" => "BudgetServiceMutateCallToAction",
+    "search" => "BudgetServiceSearch",
+    "Function" => "FeedFunction",
     "DateTime" => "AdWordsDateTime",
     "SoapHeader" => "SoapRequestHeader",
-    "AssociatedCampaign" => "AssociatedCampaign",
     "AuthenticationError" => "AuthenticationError",
     "ApiError" => "ApiError",
     "AuthorizationError" => "AuthorizationError",
@@ -3490,6 +3368,7 @@ class BudgetService extends AdWordsSoapClient {
     "DatabaseError" => "DatabaseError",
     "ApiException" => "ApiException",
     "ApplicationException" => "ApplicationException",
+    "Selector" => "Selector",
     "Budget" => "Budget",
     "BudgetOperation" => "BudgetOperation",
     "Operation" => "Operation",
@@ -3497,9 +3376,6 @@ class BudgetService extends AdWordsSoapClient {
     "Page" => "Page",
     "BudgetReturnValue" => "BudgetReturnValue",
     "ListReturnValue" => "ListReturnValue",
-    "Selector" => "Selector",
-    "AssociatedCampaign.BudgetCampaignAssociationStatus" => "AssociatedCampaignBudgetCampaignAssociationStatus",
-    "AssociatedCampaign.CampaignStatus" => "AssociatedCampaignCampaignStatus",
     "AuthenticationError.Reason" => "AuthenticationErrorReason",
     "AuthorizationError.Reason" => "AuthorizationErrorReason",
     "Budget.BudgetDeliveryMethod" => "BudgetBudgetDeliveryMethod",
@@ -3538,7 +3414,7 @@ class BudgetService extends AdWordsSoapClient {
    * The endpoint of the service
    * @var string
    */
-  public static $endpoint = "https://adwords.google.com/api/adwords/cm/v201302/BudgetService";
+  public static $endpoint = "https://adwords.google.com/api/adwords/cm/v201306/BudgetService";
 
   /**
    * Constructor using wsdl location and options array
@@ -3547,7 +3423,7 @@ class BudgetService extends AdWordsSoapClient {
    */
   public function __construct($wsdl=null, $options, $user) {
     $options["classmap"] = BudgetService::$classmap;
-    parent::__construct($wsdl, $options, $user, 'BudgetService', 'https://adwords.google.com/api/adwords/cm/v201302');
+    parent::__construct($wsdl, $options, $user, 'BudgetService', 'https://adwords.google.com/api/adwords/cm/v201306');
   }
 
   /**

@@ -34,6 +34,7 @@
  * @subpackage Util
  */
 class MapUtils {
+
   /**
    * The MapUtils class is not meant to have any instances.
    * @access private

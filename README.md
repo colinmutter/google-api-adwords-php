@@ -3,10 +3,11 @@ AdWords API PHP Client
 
 Current versions supported: 
 
- - 4.5.1 (v201302, v201302)
- - 4.4.1 (v201209, v201302, v201302)
- - 4.2.1 (v201209, v201302)
+ - 4.7.0 (v201306, v201309)
+ - 4.5.1 (v201302, v201306)
+ - 4.4.1 (v201209, v201302, v201306)
  - 4.4.0 (v201209, v201302, v201306)
+ - 4.2.1 (v201209, v201302)
 
 Added composer.json, and registered with packagist so that you can have convenient versions of the adwords api client added to your projects.
 
@@ -20,7 +21,7 @@ or add this to your composer.json, and ```composer update```
 ```  
 {
     "require": {
-        "cmutter/google-adwords-api"": "4.5.1"
+        "cmutter/google-adwords-api"": "4.7.0"
     }
 }
 ```

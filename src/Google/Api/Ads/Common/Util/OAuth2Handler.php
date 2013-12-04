@@ -35,6 +35,7 @@ require_once 'Google/Api/Ads/Common/Util/UrlUtils.php';
  * @subpackage Util
  */
 abstract class OAuth2Handler {
+
   /**
    * The refresh buffer of 60 seconds.
    */
@@ -270,9 +271,12 @@ abstract class OAuth2Handler {
 
 /**
  * Exception thrown when OAuth2 flow fails.
+ * @package GoogleApiAdsCommon
+ * @subpackage Util
  */
 class OAuth2Exception extends Exception {
   public function __construct($message, $code = NULL) {
     parent::__construct($message, $code);
   }
 }
+

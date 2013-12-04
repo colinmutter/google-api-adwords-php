@@ -26,7 +26,6 @@
  *             Version 2.0
  * @author     Paul Matthews
  */
-
 require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
 
 /**
@@ -35,6 +34,7 @@ require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
  * @subpackage Util
  */
 abstract class DeprecationUtils {
+
   /**
    * Check the AdsUser is using OAuth2 as the authorization method.
    *

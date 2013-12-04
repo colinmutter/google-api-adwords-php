@@ -38,6 +38,7 @@
  * @subpackage Util
  */
 class ChoiceUtils {
+
   /**
    * The ChoiceUtils class is not meant to have any instances.
    * @access private

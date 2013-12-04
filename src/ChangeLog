@@ -1,3 +1,14 @@
+4.7.0:
+- Fixed bug #115.
+- Removed support for v201302.
+- Added UpdateSiteLinks example.
+
+4.6.1:
+- Fixed bug #112
+
+4.6.0:
+- Added support and examples for v201309.
+
 4.5.1:
 - Reintroduced WSDL Interpreter for generating PHP stubs from WSDLS.
 

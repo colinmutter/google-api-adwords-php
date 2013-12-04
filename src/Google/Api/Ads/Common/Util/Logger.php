@@ -46,6 +46,7 @@
  * @subpackage Util
  */
 class Logger {
+
   /**
    * Logs all incomming and outgoing SOAP XML.
    * @var string log for all incomming and outgoing SOAP XML

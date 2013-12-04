@@ -1,5 +1,9 @@
 <?php
 /**
+ * A simple OAuth 2.0 handler.
+ *
+ * PHP version 5
+ *
  * Copyright 2011, Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +32,8 @@ require_once 'Google/Api/Ads/Common/Util/CurlUtils.php';
 
 /**
  * A simple OAuth 2.0 handler.
+ * @package GoogleApiAdsCommon
+ * @subpackage Util
  */
 class SimpleOAuth2Handler extends OAuth2Handler {
 

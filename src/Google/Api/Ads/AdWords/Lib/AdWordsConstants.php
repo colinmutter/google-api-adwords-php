@@ -33,6 +33,7 @@
  * @subpackage Lib
  */
 class AdWordsConstants {
+
   /**
    * Recommended page size for most services.
    * @var int
@@ -51,3 +52,4 @@ class AdWordsConstants {
    */
   const MICRO_DEGREES_PER_DEGREE = 1000000;
 }
+

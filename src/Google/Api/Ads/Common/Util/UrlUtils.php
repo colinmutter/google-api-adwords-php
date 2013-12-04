@@ -34,6 +34,7 @@
  * @subpackage Util
  */
 class UrlUtils {
+
   /**
    * The UrlUtils class is not meant to have any instances.
    * @access private
