@@ -4,7 +4,7 @@
     "description": "AdWords PHP API Client",
     "keywords": ["adwords", "google"],
     "homepage": "https://github.com/colinmutter/google-api-adwords-php",
-    "license": "Apache License 2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Adam Rogal",
@@ -19,6 +19,9 @@
     ],
     "require": {
         "php": ">=5.3.0"
+    },
+    "replace": {
+        "google/adwords": "4.*"
     },
     "autoload": {
         "classmap": ["src/Google/Api/Ads/AdWords/Lib"]
