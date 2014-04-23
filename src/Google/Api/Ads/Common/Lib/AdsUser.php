@@ -50,6 +50,8 @@ abstract class AdsUser {
   private $soapCompression;
   private $soapCompressionLevel;
   private $wsdlCache;
+  private $forceHttpVersion;
+  private $forceAddXsiTypes;
   private $authServer;
   private $oauth2Info;
   private $oauth2Handler;
@@ -230,6 +232,15 @@ abstract class AdsUser {
     if ($this->wsdlCache < 0 || $this->wsdlCache > 3) {
       $this->wsdlCache = WSDL_CACHE_NONE;
     }
+    $forceHttpVersion = $this->GetSetting($settingsIni, 'SOAP',
+        'FORCE_HTTP_VERSION');
+    $this->forceHttpVersion = $forceHttpVersion === null ? null :
+        (float) $forceHttpVersion;
+    $forceAddXsiTypes = $this->GetSetting($settingsIni, 'SOAP',
+        'FORCE_ADD_XSI_TYPES');
+    $this->forceAddXsiTypes = $forceAddXsiTypes === null ? null :
+        (bool) $forceAddXsiTypes;
+
 
     // Proxy settings.
     $proxyHost = $this->GetSetting($settingsIni, 'PROXY', 'HOST');
@@ -372,6 +383,22 @@ abstract class AdsUser {
   }
 
   /**
+   * Gets the version of the HTTP protocol to use regardless of PHP version.
+   * @return float the HTTP version that should be used
+   */
+  public function GetForceHttpVersion() {
+    return $this->forceHttpVersion;
+  }
+
+  /**
+   * Gets the setting of whether or not to add XSI types in the SOAP payload.
+   * @return bool whether or not to add XSI types in the SOAP payload
+   */
+  public function GetForceAddXsiTypes() {
+    return $this->forceAddXsiTypes;
+  }
+
+  /**
    * Gets the server used for authentication.
    * @return string the server used for authentiation
    */
@@ -425,6 +452,7 @@ abstract class AdsUser {
    */
   abstract protected function GetClientLibraryNameAndVersion();
 
+
   /**
    * Gets common PHP user agent parts for ads client libraries such as PHP
    * version, operating system, browser, or if compression is being used or not.
@@ -471,8 +499,9 @@ abstract class AdsUser {
    *     header.
    */
   public function SetClientLibraryUserAgent($applicationName) {
-    $this->SetHeaderValue($this->GetUserAgentHeaderName(), sprintf("%s (%s)", $applicationName,
-        implode(', ', $this->GetAllClientLibraryUserAgentParts())));
+    $this->SetHeaderValue($this->GetUserAgentHeaderName(), sprintf("%s (%s)",
+        $applicationName, implode(', ',
+        $this->GetAllClientLibraryUserAgentParts())));
   }
 
   /**

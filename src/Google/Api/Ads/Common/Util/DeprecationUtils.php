@@ -1,6 +1,7 @@
 <?php
 /**
- * A collection of utility methods for deprecation purposes.
+ * A collection of utility methods for logging or throwing errors related to the
+ * usage of deprecated features.
  *
  * PHP version 5
  *
@@ -25,23 +26,26 @@
  * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License,
  *             Version 2.0
  * @author     Paul Matthews
+ * @author     Vincent Tsao
  */
 require_once 'Google/Api/Ads/Common/Lib/AdsUser.php';
+require_once 'Google/Api/Ads/Common/Lib/ServiceException.php';
 
 /**
- * A collection of utility methods for deprecation purposes.
+ * A collection of utility methods for logging or throwing errors related to the
+ * usage of deprecated features.
  * @package GoogleApiAdsCommon
  * @subpackage Util
  */
 abstract class DeprecationUtils {
 
   /**
-   * Check the AdsUser is using OAuth2 as the authorization method.
+   * Determines if a ClientLogin deprecation warning should be logged or not.
    *
    * @param AdsUser $user the AdsUser to test
    */
-  public static function CheckAdsUserUsingOAuth2(AdsUser $user) {
-    if (self::ShouldRaiseClientLoginWarning($user)) {
+  public static function CheckUsingClientLogin(AdsUser $user) {
+    if (!self::IsUsingOAuth2($user)) {
       self::Log("Current authentication method DEPRECATED. Please switch to"
           . " OAuth2 as authentication method. For more information, see:\n"
           . " https://developers.google.com/accounts/docs/"
@@ -50,18 +54,36 @@ abstract class DeprecationUtils {
   }
 
   /**
-   * Check if a User needs an Client Login warning raised.
+   * Checks to see if an ads user is authenticating with OAuth 2 or not.
    *
    * @param AdsUser $user the AdsUser to test
-   * @return boolean TRUE if an OAuth2 Info message should be raised
+   * @return boolean true if using OAuth 2, false otherwise
    */
-  public static function ShouldRaiseClientLoginWarning(AdsUser $user) {
-    // Check that they're not using OAuth2
-    $credentials = $user->GetOAuth2Info();
-    return (empty($credentials['refresh_token'])
-        && empty($credentials['access_token'])
-        && (empty($credentials['client_id'])
-            ||  empty($credentials['client_secret'])));
+  public static function IsUsingOAuth2(AdsUser $user) {
+    // AdsUser doesn't have ClientLogin information on it, only the subclasses
+    // do, so we can only check for absence of OAuth 2 here.
+    return $user->GetOAuth2Info() !== NULL;
+  }
+
+  /**
+   * Checks to see if ClientLogin is being used as the authentication mechanism
+   * in a version where it is not supported and throws an error if this is the
+   * case.
+   *
+   * @param AdsUser $user the AdsUser to test
+   * @param string $finalClientLoginVersion the final API version that supports
+   *    ClientLogin
+   * @param string $requestedVersion the API version being used
+   * @throws ServiceException if the requested version does not support
+   *     ClientLogin
+   */
+  public static function CheckUsingClientLoginWithUnsupportedVersion(
+      AdsUser $user, $finalClientLoginVersion, $requestedVersion) {
+    if (!self::IsUsingOAuth2($user) &&
+        $requestedVersion > $finalClientLoginVersion) {
+      throw new ServiceException(sprintf("ClientLogin is not supported in "
+          . "version %s. Please upgrade to OAuth 2.", $requestedVersion));
+    }
   }
 
   /**

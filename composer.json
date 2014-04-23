@@ -6,17 +6,30 @@
     "homepage": "https://github.com/colinmutter/google-api-adwords-php",
     "license": "Apache-2.0",
     "authors": [
-        {
-            "name": "Adam Rogal",
-            "email": "api.arogal@gmail.com",
-            "homepage": "http://code.google.com/p/google-api-adwords-php/"
-        },
-        {
-            "name": "Eric Koleda",
-            "email": "eric.koleda.devrel@gmail.com",
-            "homepage": "https://profiles.google.com/u/0/eric.koleda.devrel"
-        }
+      {
+        "name": "Paul Matthews",
+        "role": "Developer"
+      },
+      {
+        "name": "Adam Rogal",
+        "role": "Developer"
+      },
+      {
+        "name": "Mat Scales",
+        "role": "Developer"
+      },
+      {
+        "name": "Vincent Tsao",
+        "role": "Developer"
+      },
+      {
+        "name": "Ray Tsang",
+        "role": "Developer"
+      }
     ],
+    "suggest": {
+        "googleads/googleads-php-lib": "The OFFICIAL googleads PHP client library"
+    },
     "require": {
         "php": ">=5.3.0"
     },
