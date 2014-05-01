@@ -29,6 +29,7 @@
  */
 require_once dirname(__FILE__) . '/../Lib/AdWordsUser.php';
 require_once dirname(__FILE__) . '/../../Common/Util/CurlUtils.php';
+require_once dirname(__FILE__) . '/../../Common/Util/DeprecationUtils.php';
 require_once dirname(__FILE__) . '/../../Common/Util/Logger.php';
 require_once dirname(__FILE__) . '/../../Common/Util/XmlUtils.php';
 
@@ -312,6 +313,8 @@ class ReportUtils {
       $user->SetOAuth2Info($oAuth2Info);
       $authHeader = $oAuth2Handler->FormatCredentialsForHeader($oAuth2Info);
     } else {
+      DeprecationUtils::CheckUsingClientLoginWithUnsupportedVersion($user,
+        AdWordsUser::FINAL_CLIENT_LOGIN_VERSION, $version);
       $authHeader = sprintf(self::CLIENT_LOGIN_FORMAT, $user->GetAuthToken());
     }
     $headers['Authorization'] = $authHeader;
