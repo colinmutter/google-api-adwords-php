@@ -21,7 +21,7 @@ or add this to your composer.json, and ```composer update```
 ```  
 {
     "require": {
-        "cmutter/google-adwords-api"": "4.7.0"
+        "cmutter/google-adwords-api": "4.7.0"
     }
 }
 ```
